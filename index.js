@@ -65,11 +65,10 @@ fs.readFile(data, "utf8", (error, data) => {
   };
 
   // Tri rapide (tri pivot) / Quicksort
+  const quickSort = (numbers) => {
+    let counter = 0;
 
-    const quickSort = (numbers, counter) => {
-      if (!counter) {
-       counter = 0;
-      }
+    const sort = (numbers) => {    
       if (numbers.length <= 1) return numbers;
       const pivot = numbers[0];
       let right = [];
@@ -79,26 +78,18 @@ fs.readFile(data, "utf8", (error, data) => {
         counter++;
         numbers[i] < pivot ? left.push(numbers[i]) : right.push(numbers[i]);
       }
-      console.log(counter)
-      return quickSort(left, counter).concat(pivot, quickSort(right, counter));
+      return sort(left, counter).concat(pivot, sort(right, counter));
     };
- 
 
-
-  
+    numbers = sort(numbers)
+    return `Tri rapide/QuickSort: ${counter} comparaisons [${numbers}]`;
+  };
 
   console.log(bubbleSort(arr_numbers));
   console.log(insersionSort(arr_numbers));
   console.log(selectionSort(arr_numbers));
   console.log(quickSort(arr_numbers));
 });
-
-
-
-
-
-
-
 
 /* Je me suis beaucoup trop emmerdé : 
 let count = 0 
