@@ -188,6 +188,38 @@ fs.readFile(data, "utf8", (error, data) => {
     return `Tri par tas/HeapSort: ${counter} comparaisons [${sorted}]`;
   };
 
+  const oddEvenSort = (arr_numbers) => {
+    let counter = 0;
+    let numbers = [...arr_numbers];
+
+    const swap = (numbers, firstItemIndex, lastItemIndex) => {
+      const temp = numbers[firstItemIndex];
+      // Swap first and last items in the array
+      numbers[firstItemIndex] = numbers[lastItemIndex];
+      numbers[lastItemIndex] = temp;
+    };
+
+    let sorted = false;
+    while (!sorted) {
+      sorted = true;
+      for (let i = 0; i < numbers.length - 1; i += 2) {
+        counter++;
+        if (numbers[i] > numbers[i + 1]) {
+          swap(numbers, i, i + 1);
+          sorted = false;
+        }
+      }
+      for (let i = 1; i < numbers.length - 1; i += 2) {
+        counter++;
+        if (numbers[i] > numbers[i + 1]) {
+          swap(numbers, i, i + 1);
+          sorted = false;
+        }
+      }
+    }
+    return `Tri pair/impair/ Odd-Even Sort: ${counter} comparaisons [${numbers}]`;
+  };
+
   console.log(bubbleSort(arr_numbers));
   arr_numbers = data.split(" ").map((num) => parseInt(num, 10));
   console.log(insersionSort(arr_numbers));
@@ -199,4 +231,6 @@ fs.readFile(data, "utf8", (error, data) => {
   console.log(mergeSort(arr_numbers));
   arr_numbers = data.split(" ").map((num) => parseInt(num, 10));
   console.log(heapSort(arr_numbers));
+  arr_numbers = data.split(" ").map((num) => parseInt(num, 10));
+  console.log(oddEvenSort(arr_numbers));
 });
