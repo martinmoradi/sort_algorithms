@@ -11,7 +11,9 @@ fs.readFile(data, "utf8", (error, data) => {
   }
   arr_numbers = data.split(" ").map((num) => parseInt(num, 10));
 
+  /* ------------------------------------------------------------------------------ */
   // Tri à bulle / Bubble sort
+
   const bubbleSort = (arr_numbers) => {
     let numbers = [...arr_numbers];
     let comparaisonsCounter = 0;
@@ -26,7 +28,9 @@ fs.readFile(data, "utf8", (error, data) => {
     return `Tri à bulle/Bubble Sort: ${comparaisonsCounter} comparaisons - [${numbers}]`;
   };
 
+  /* ------------------------------------------------------------------------------ */
   // Tri par insertion / Insertion sort
+
   const insersionSort = (arr_numbers) => {
     let numbers = [...arr_numbers];
     let comparaisonsCounter = 0;
@@ -44,6 +48,7 @@ fs.readFile(data, "utf8", (error, data) => {
     return `Tri par insertion/Insertion sort: ${comparaisonsCounter} comparaisons - [${numbers}]`;
   };
 
+  /* ------------------------------------------------------------------------------ */
   // Tri par selection / Selection sort
 
   const selectionSort = (arr_numbers) => {
@@ -65,9 +70,12 @@ fs.readFile(data, "utf8", (error, data) => {
     return `Tri par sélection/Selection sort: ${comparaisonsCounter} comparaisons - [${numbers}]`;
   };
 
+  /* ------------------------------------------------------------------------------ */
   // Tri rapide (tri pivot) / Quicksort
-  const quickSort = (numbers) => {
+
+  const quickSort = (arr_numbers) => {
     let counter = 0;
+    let numbers = [...arr_numbers];
 
     const sort = (numbers) => {
       if (numbers.length <= 1) return numbers;
@@ -86,7 +94,9 @@ fs.readFile(data, "utf8", (error, data) => {
     return `Tri rapide/QuickSort: ${counter} comparaisons [${numbers}]`;
   };
 
+  /* ------------------------------------------------------------------------------ */
   // Tri fusion (merge sort)
+
   const mergeSort = (arr_numbers) => {
     let counter = 0;
     let numbers = [...arr_numbers];
@@ -115,9 +125,78 @@ fs.readFile(data, "utf8", (error, data) => {
     return `Tri fusion/Merge Sort: ${counter} comparaisons [${numbers}]`;
   };
 
+  /* ------------------------------------------------------------------------------ */
+  // Tri par tas / HeapSort
+
+  const heapSort = (arr_numbers) => {
+    let numbers = [...arr_numbers];
+    let counter = 0;
+
+    const heapSortMain = (numbers) => {
+      buildMaxHeap(numbers); // Build max heap
+      lastElement = numbers.length - 1; // Get the index of the last element
+      while (lastElement > 0) {
+        // Continue heap sorting until we have one element left
+        swap(numbers, 0, lastElement);
+        heapify(numbers, 0, lastElement);
+        lastElement -= 1;
+      }
+      return numbers; // Return sorted array
+    };
+
+    const swap = (numbers, firstItemIndex, lastItemIndex) => {
+      const temp = numbers[firstItemIndex];
+      // Swap first and last items in the array
+      numbers[firstItemIndex] = numbers[lastItemIndex];
+      numbers[lastItemIndex] = temp;
+    };
+
+    const heapify = (heap, i, max) => {
+      let index;
+      let leftChild;
+      let rightChild;
+      while (i < max) {
+        counter++;
+        index = i;
+        // Get the left child index using known formula
+        leftChild = 2 * i + 1;
+        // Get the right child index
+        rightChild = leftChild + 1;
+        if (leftChild < max && heap[leftChild] > heap[index]) {
+          index = leftChild;
+        }
+        if (rightChild < max && heap[rightChild] > heap[index]) {
+          index = rightChild;
+        }
+        if (index === i) {
+          return;
+        }
+        swap(heap, i, index);
+        i = index;
+      }
+    };
+
+    const buildMaxHeap = (numbers) => {
+      // Get index of the middle element
+      let i = Math.floor(numbers.length / 2 - 1);
+      while (i >= 0) {
+        heapify(numbers, i, numbers.length);
+        i -= 1;
+      }
+    };
+    sorted = heapSortMain(numbers);
+    return `Tri par tas/HeapSort: ${counter} comparaisons [${sorted}]`;
+  };
+
   console.log(bubbleSort(arr_numbers));
+  arr_numbers = data.split(" ").map((num) => parseInt(num, 10));
   console.log(insersionSort(arr_numbers));
+  arr_numbers = data.split(" ").map((num) => parseInt(num, 10));
   console.log(selectionSort(arr_numbers));
+  arr_numbers = data.split(" ").map((num) => parseInt(num, 10));
   console.log(quickSort(arr_numbers));
+  arr_numbers = data.split(" ").map((num) => parseInt(num, 10));
   console.log(mergeSort(arr_numbers));
+  arr_numbers = data.split(" ").map((num) => parseInt(num, 10));
+  console.log(heapSort(arr_numbers));
 });
